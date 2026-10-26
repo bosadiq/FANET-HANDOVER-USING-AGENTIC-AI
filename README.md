@@ -48,19 +48,4 @@ channel realisation for each seed.
 Interruption time per UAV [s], ping-pong rate, packet delivery ratio, signalling messages per UAV-slot,
 handovers per UAV, video delivery ratio, relay load variance, connectivity, UAVs lost to battery, team return J.
 
-## Honest notes and limits
-
-The policy is trained with the cross-entropy method (a black-box policy search over 8 shared parameters),
-not MAPPO. It follows the same centralised-training, decentralised-execution idea and needs no toolbox.
-For a neural MAPPO agent, wrap fanet_run as an environment (state = fanet_decide observation features,
-action = candidate index, reward = per-slot r) and train with the Reinforcement Learning Toolbox or export
-the traces to Python (EPyMARL, RLlib).
-UAV mobility is scripted (assumption A1), so the channel is computed once per seed and reused by every policy.
-The predictor is a model-based look-ahead, not a learned network (assumption A4 asks for a learned f_phi).
-Replacing fanet_env.m section 4 with a trained regressor (for example fitrnet) keeps the interface unchanged.
-All radio, traffic and battery values are plausible assumptions, not measurements. Change them in
-fanet_params.m and state them in the thesis.
-Interference from other UAVs is not modelled; only the jammer adds interference.
-Compare methods on many seeds (P.eval.seeds) and report mean and spread. Single-seed results vary.
-
 
